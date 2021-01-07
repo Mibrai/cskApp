@@ -1,0 +1,39 @@
+<ion-menu side="start" type="overlay" [content]="mymenu">
+  <ion-header>
+    <ion-toolbar color="toolbar">
+      <ion-title> Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="logo">
+      <img class="logo-img" src="../../assets/imgs/csklogo.png" />
+    </div>
+    <ion-list class="menu-list">
+        <ion-item (click)="goToLogin()">
+          <ion-label><ion-icon slot="start" name="key" size="large"></ion-icon><span slot="end">Login</span></ion-label>
+
+        </ion-item>
+        <ion-item (click)="goToSignUp()">
+
+          <ion-label><ion-icon slot="start" name="log-in" size="large"></ion-icon><span slot="end">Sign In</span></ion-label>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar color="toolbar"  class="style_footer">
+      <button ion-button color="toolbar" class="btn_footer"  expand="full" fill="outline" size="large">
+        <ion-icon name="help-circle-outline" slot="start" size="large"></ion-icon>
+        <span  slot="end">  &nbsp; &nbsp; Help</span>
+      </button>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-menu>
+<ion-nav #mymenu [root] = "rootPage" ></ion-nav>
+
+
+<ion-tabs color="toolbar">
+    <ion-tab *ngFor="let page of pageList" [root]="page.url" [tabTitle]="page.title" [tabIcon]="page.icon"></ion-tab>
+</ion-tabs>
