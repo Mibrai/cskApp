@@ -1,0 +1,63 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController } from 'ionic-angular';
+
+import { LoginPage } from '../login/login';
+
+import { SignUpPage } from '../sign-up/sign-up';
+
+/**
+ * Generated class for the MyTabsPage tabs.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-my-tabs',
+  templateUrl: 'my-tabs.html'
+})
+export class MyTabsPage {
+
+  rootPage:string;
+  flohmarktRoot = 'AnnoncePage'
+  edocsRoot = 'EdocsPage'
+  chatRoomRoot = 'ChatRoomPage'
+  settingsRoot = 'SettingsPage'
+
+  pageList = [
+    {
+      title: 'Flohmarkt',
+      icon: 'pricetags',
+      url :'AnnoncePage'
+    },
+    {
+      title: 'Edocs',
+      icon: 'folder-open',
+      url :'EdocsPage'
+    },
+    {
+      title: 'chatRoom',
+      icon: 'chatbubbles',
+      url :'ChatsPage'
+    },
+    {
+      title: 'Settings',
+      icon: 'settings',
+      url :'SettingsPage'
+    },
+  ];
+
+
+  constructor(public navCtrl: NavController) {}
+
+  goToLogin(){
+    this.navCtrl.push(LoginPage);
+  }
+
+
+
+  goToSignUp(){
+    this.navCtrl.push(SignUpPage);
+  }
+}

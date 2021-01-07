@@ -1,0 +1,136 @@
+page-edocs {
+
+}
+.card_header{
+  height:auto;
+  width: 100%;
+}
+ion-card-header img{
+  width:30%;
+  clip-path: circle(50% at 50% 50%);
+  margin-top:-5px;
+}
+.card_header ion-label span{
+  padding:3px;
+  font-size:8px;
+  margin-top:5px;
+}
+.card_header ion-label{
+  display: flex;
+}
+
+.card_header ion-card-title{
+  font-size:8px;
+  display: block;
+}
+.card_header ion-card-title div{
+  font-size:8px;
+  display: flex;
+}
+.card_header ion-card-title span{
+  float:right;
+  margin-top:5px;
+}
+
+.card_content{
+  margin:5px;
+}
+.card_footer{
+    color:#2f681e;
+}
+.card_footer ion-item{
+  float:right;
+  margin:5px;
+}
+.card_footer ion-label span{
+  margin-top:-10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.label-title{
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size:18px;
+  padding:5px;
+  box-shadow:1px 1px 5px 1px gainsboro;
+  margin:5px;
+}
+.card_option ion-item{
+  box-shadow: 3px 3px 20px 1px gainsboro;
+  margin:3px;
+  text-align: center;
+  border-radius: 20% 20% 0% 0%;
+  font-size:18px;
+}
+
+.card_option ion-item:hover{
+  box-shadow: 3px 3px 10px 1px grey;
+}
+
+
+
+.designAlertBtn{
+  color:white;
+  background:linear-gradient(to right top, #0e5921, #2f681e, #4d7719, #6b8513, #8c920b);
+}
+.designAlert li{
+  padding:5px;
+  box-shadow:1px 1px 5px 1px gainsboro;
+  margin-top: 3px;
+  margin-bottom: 2px;
+  min-height: 100px;
+}
+.designAlert .card_header {
+  float:left;
+  background:linear-gradient(to right top, #0e5921, #2f681e, #4d7719, #6b8513, #8c920b);
+}
+.createdAt ion-label{
+  color:green;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  border-top:1px solid green;
+  border-radius: 20% 20% 0% 0%;
+}
+
+.designAlert{
+  padding:5px;
+  box-shadow:1px 1px 5px 1px gainsboro;
+  margin-top: 3px;
+  margin-bottom: 2px;
+  min-height: 100px;
+}
+.class_autor{
+  text-align: center;
+  color:white;
+  font-size:13px;
+  max-width: 50px;
+  min-height: 40px;
+  margin-top:-1px;
+  display: flex;
+  border-bottom:1px solid green;
+  width:100%;
+  margin-bottom:3px;
+}
+
+.class_autor img{
+  width:60%;
+  clip-path: circle(50% at 50% 50%);
+}
+.footer_alert{
+  border:1px solid red;
+}
+
+.form_cmt{
+  display: block;
+  padding:5px;
+  box-shadow:1px 1px 5px 1px gainsboro;
+  margin-top: 3px;
+  margin-bottom: 2px;
+  min-height: 120px;
+}
+
+
+.div_form{
+  display: block;
+  padding:5px;
+  box-shadow:1px 1px 5px 1px gainsboro;
+  margin-bottom: 2px;
+}
