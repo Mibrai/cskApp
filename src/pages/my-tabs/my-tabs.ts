@@ -37,9 +37,9 @@ export class MyTabsPage {
       url :'EdocsPage'
     },
     {
-      title: 'chatRoom',
+      title: 'Chat Room',
       icon: 'chatbubbles',
-      url :'ChatsPage'
+      url :'ChatRoomPage'
     },
     {
       title: 'Settings',

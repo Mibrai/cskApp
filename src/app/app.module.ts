@@ -20,6 +20,7 @@ import { AnnoncesProvider } from '../providers/annonces/annonces';
 import { FacultyProvider } from '../providers/faculty/faculty';
 import { CourseProvider } from '../providers/course/course';
 import { ShowReponssePage } from '../pages/show-reponsse/show-reponsse';
+import { ChatsProvider } from '../providers/chats/chats';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ShowReponssePage } from '../pages/show-reponsse/show-reponsse';
     PostsProvider,
     AnnoncesProvider,
     FacultyProvider,
-    CourseProvider
+    CourseProvider,
+    ChatsProvider
   ]
 })
 export class AppModule { }
