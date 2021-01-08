@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ChatsProvider } from '../../providers/chats/chats'
+import { SingleChatPage } from '../single-chat/single-chat';
 
 /**
  * Generated class for the ChatRoomPage page.
@@ -17,6 +18,8 @@ import { ChatsProvider } from '../../providers/chats/chats'
 export class ChatRoomPage {
   readonly uri: string = 'https://clausthaler-kameruner.com/edocs/api/apiChat/';
 
+  chats: any = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public chatsProvider: ChatsProvider) {
   }
 
@@ -28,7 +31,13 @@ export class ChatRoomPage {
     // console.log('ionViewWillEnter ChatRoomPage');
     this.chatsProvider.loadAllChat().subscribe(data => {
       console.log(JSON.parse(JSON.stringify(data)));
+      this.chats = JSON.parse(JSON.stringify(data));
     });
+  }
+
+  openChat(chat: any) {
+    console.log("Chat will open soon!");
+    this.navCtrl.push(SingleChatPage, { title: chat.title });
   }
 
 }
