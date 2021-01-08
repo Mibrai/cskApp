@@ -16,7 +16,9 @@ import { SettingsPage } from '../pages/settings/settings';
 import { MyTabsPage } from '../pages/my-tabs/my-tabs';
 import { PostsProvider } from '../providers/posts/posts';
 import { AnnoncesProvider } from '../providers/annonces/annonces';
-import { ChatsProvider } from '../providers/chats/chats';
+import { FacultyProvider } from '../providers/faculty/faculty';
+import { CourseProvider } from '../providers/course/course';
+import { ShowReponssePage } from '../pages/show-reponsse/show-reponsse';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { ChatsProvider } from '../providers/chats/chats';
     HomePage,
     LoginPage,
     SignUpPage,
+    ShowReponssePage,
     MyTabsPage
   ],
   imports: [
@@ -37,6 +40,7 @@ import { ChatsProvider } from '../providers/chats/chats';
     HomePage,
     LoginPage,
     SignUpPage,
+    ShowReponssePage,
     MyTabsPage
   ],
   providers: [
@@ -45,7 +49,8 @@ import { ChatsProvider } from '../providers/chats/chats';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PostsProvider,
     AnnoncesProvider,
-    ChatsProvider
+    FacultyProvider,
+    CourseProvider
   ]
 })
 export class AppModule {}

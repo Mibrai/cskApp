@@ -2,13 +2,15 @@ page-edocs {
 
 }
 .card_header{
-  height:auto;
   width: 100%;
+
+}
+ion-card-header{
+  border-bottom: 1 solid gainsboro;
 }
 ion-card-header img{
-  width:30%;
-  clip-path: circle(50% at 50% 50%);
-  margin-top:-5px;
+
+
 }
 .card_header ion-label span{
   padding:3px;
@@ -34,6 +36,8 @@ ion-card-header img{
 
 .card_content{
   margin:5px;
+  min-height: 100px;
+  overflow: scroll;
 }
 .card_footer{
     color:#2f681e;
@@ -54,16 +58,23 @@ ion-card-header img{
   box-shadow:1px 1px 5px 1px gainsboro;
   margin:5px;
 }
+.card_option{
+  border-top:1px solid gainsboro;
+}
 .card_option ion-item{
-  box-shadow: 3px 3px 20px 1px gainsboro;
   margin:3px;
   text-align: center;
-  border-radius: 20% 20% 0% 0%;
+  border-radius: 1%;
   font-size:18px;
 }
 
+.title_way:hover{
+  box-shadow: 3px 3px 20px 1px gainsboro;
+  font-size:8px;
+}
+
 .card_option ion-item:hover{
-  box-shadow: 3px 3px 10px 1px grey;
+  box-shadow: 3px 3px 20px 1px gainsboro;
 }
 
 

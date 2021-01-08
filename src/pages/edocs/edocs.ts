@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams ,AlertController, ModalController } from 'ionic-angular';
 import { PostsProvider } from '../../providers/posts/posts';
+import { FacultyProvider } from '../../providers/faculty/faculty';
+import { CourseProvider } from '../../providers/course/course';
+import { ShowReponssePage } from '../show-reponsse/show-reponsse';
 
 /**
  * Generated class for the EdocsPage page.
@@ -20,7 +23,23 @@ export class EdocsPage {
   allPost: any = [];
   selectedComments : string = "";
   tabCmt :any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public postService : PostsProvider , public alertCtrl : AlertController ) {
+  allFaculty :any = [];
+  allCourse : any = [];
+  selectedFaculty:any = "";
+  selectedCourse:any = "";
+  courseOfFaculty :any = [];
+
+  state : boolean = false;
+  postByFaculty :any = [];
+  postByCourse : any = [];
+
+  constructor(public navCtrl: NavController,
+     public navParams: NavParams,
+      public postService : PostsProvider ,
+      public facultyService : FacultyProvider,
+      public courseService : CourseProvider,
+      public alertCtrl : AlertController,
+      public modalCtrl: ModalController ) {
 
   }
 
@@ -28,10 +47,21 @@ export class EdocsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EdocsPage');
-
   }
 
   ionViewWillEnter(){
+
+    //get all faculty from api
+    this.facultyService.getAllFaculty().subscribe(faculties => {
+     this.allFaculty = JSON.parse(JSON.stringify(faculties));
+    });
+
+    //get all Course from api
+    this.courseService.getAllCourse().subscribe(courses => {
+
+      this.allCourse = JSON.parse(JSON.stringify(courses));
+    });
+    //get all post from  api
     this.allPost = this.postService.getAllPost().subscribe(posts => {
 
       console.log("Element \n");
@@ -44,7 +74,6 @@ export class EdocsPage {
   }
 
   showComments(listComment :any = []){
-
 
       console.log(" list of all comments : \n "+listComment);
       this.tabCmt = listComment;
@@ -65,14 +94,17 @@ export class EdocsPage {
             name:'cmt',
             type: 'textarea',
             placeholder:'Entrez votre commentaire ici...'
-          },
-          {
-            name:'btn_send',
-            type:'submit',
-            value:'poster'
           }
         ],
         buttons: [
+          {
+            text: 'Poster',
+            role: 'ok',
+            cssClass:'designAlertBtn',
+            handler: (alertData) => {
+              console.log(" Input \n"+alertData.cmt);
+            }
+          },
           {
             text: 'Fermer',
             role: 'cancel',
@@ -89,6 +121,86 @@ export class EdocsPage {
 
 
 
+  }
+
+  async showReponse(post_description:String,listResponse:any = []){
+
+    let modalResponse =  await this.modalCtrl.create(ShowReponssePage ,{ responses : listResponse , desc :post_description });
+
+     return await modalResponse.present();
+  }
+
+  onSelectFaculty(){
+
+    let i = 0;
+    //list all course for this faculty
+    console.log(" Slected faculty \t "+this.getCodeFacultyByName(this.selectedFaculty));
+    this.courseService.getCoursesByFaculty(this.getCodeFacultyByName(this.selectedFaculty)).subscribe(courses => {
+      this.courseOfFaculty = JSON.parse(JSON.stringify(courses));
+      this.allCourse = [];
+      for(let cours of this.courseOfFaculty){
+        let cs : any = {
+          code : cours.code,
+          title : cours.title,
+          createdAt : cours.createdAt,
+          codeFaculty : cours.codeFaculty
+        };
+
+        this.allCourse.push(cs);
+
+      }
+      console.log(" Course of faculty "+this.selectedFaculty+" \n"+this.courseOfFaculty);
+    });
+
+    this.allCourse = ( this.courseOfFaculty.length > 0) ?  this.courseOfFaculty : this.allCourse;
+
+    this.postByFaculty = [];
+
+    while( i < this.allPost.length){
+
+      if(this.allPost[i].faculty == this.selectedFaculty)
+        this.postByFaculty.push(this.allPost[i]);
+
+      i++;
+    }
+    if(this.postByFaculty.length > 0)
+      this.data = this.postByFaculty;
+
+  }
+
+  onSelectedCourse(){
+    let i = 0;
+    this.postByCourse = [];
+    while( i < this.allPost.length){
+
+      if(this.allPost[i].course == this.selectedCourse)
+        this.postByCourse.push(this.allPost[i]);
+
+      i++;
+    }
+    if(this.postByCourse.length > 0)
+      this.data = this.postByCourse;
+  }
+
+  getCodeFacultyByName(name:String){
+    let code : string = "";
+    for(let faculty of this.allFaculty){
+
+      if(faculty.title == name)
+        code =  faculty.code;
+    }
+
+    return code;
+  }
+
+  changeFaculty(faculty:string){
+    this.selectedFaculty = faculty;
+    this.onSelectFaculty();
+  }
+
+  changeCourse(course:string){
+    this.selectedCourse = course;
+    this.onSelectedCourse();
   }
 
 }

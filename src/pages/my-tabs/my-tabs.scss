@@ -1,3 +1,29 @@
 page-my-tabs {
 
 }
+
+.card_header{
+  width: 100%;
+  border-bottom:1px solid gainsboro;
+  max-height:70px;
+}
+.card_header ion-label{
+  min-height: 60px;
+  max-height:100px;
+  margin-top:-10px;
+  margin-left:-10px;
+}
+.card_header ion-label img{
+  transform:scale(0.5);
+  margin-top:-5px;
+  margin-left:-5px;
+  clip-path: circle(50% at 50% 50%);
+}
+.footer_alert{
+  border:1px solid green;
+}
+
+.div_form{
+  width:93%;
+  margin-left:12px;
+}

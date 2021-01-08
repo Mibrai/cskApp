@@ -14,11 +14,11 @@
   <ion-label class="label-title">Archives  <ion-icon slot="start" name="folder" size="large"></ion-icon></ion-label>
 
   <div class="div_form">
-    <ion-label style="text-align: center; font-size:20px;"> <span>Filtrer</span> <ion-icon name="filter-outline"></ion-icon></ion-label>
+    <ion-label style="font-size:20px;"> <span>Filtrer</span> <ion-icon name="filter-outline"></ion-icon></ion-label>
     <ion-list>
       <ion-item>
         <ion-label color="primary">Par filiere <ion-icon name="school-outline"></ion-icon></ion-label>
-        <ion-select multiple="false" placeholder="Filtrer par filiere">
+        <ion-select multiple="false" placeholder="Filtrer par filiere" [(ngModel)]="selectedFaculty" (ngModelChange)="onSelectFaculty()">
           <ion-option disabled>----Cours de Langue -----</ion-option>
           <ion-option>A1</ion-option>
           <ion-option>A2</ion-option>
@@ -26,17 +26,14 @@
           <ion-option>B2</ion-option>
           <ion-option>C1</ion-option>
           <ion-option disabled>----- Uni -----</ion-option>
-          <ion-option>Informatik</ion-option>
-          <ion-option>BWL</ion-option>
-          <ion-option>TBWL</ion-option>
-          <ion-option>Chemie</ion-option>
+          <ion-option *ngFor="let faculty of allFaculty" [value]="faculty.title">{{faculty.title}}</ion-option>
           <ion-option>...</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label color="primary">Par Matiere <ion-icon name="book-outline"></ion-icon></ion-label>
-        <ion-select multiple="false" placeholder="Filtrer par matiere">
+        <ion-select multiple="false" placeholder="Filtrer par matiere" [(ngModel)]="selectedCourse" (ngModelChange)="onSelectedCourse()">
           <ion-option disabled>----Cours de Langue -----</ion-option>
           <ion-option>Lesen</ion-option>
           <ion-option>Hören</ion-option>
@@ -44,11 +41,8 @@
           <ion-option>Grammatik</ion-option>
           <ion-option>Sprechen</ion-option>
           <ion-option disabled>----- Uni -----</ion-option>
-          <ion-option>Architektur und Modelierung</ion-option>
-          <ion-option>Grundlagen der Automatisierung</ion-option>
-          <ion-option>Datenbanken 2</ion-option>
-          <ion-option>Serious games</ion-option>
-          <ion-option>CAD</ion-option>
+          <ion-option *ngFor="let course of allCourse" [value]="course.title">{{course.title}}</ion-option>
+          <ion-option>...</ion-option>
         </ion-select>
       </ion-item>
 
@@ -57,12 +51,12 @@
   </div>
 
   <ion-card  *ngFor="let post of  data">
-    <ion-card-header class="card_header" style="display: flex; background:linear-gradient(to right top, #0e5921, #2f681e, #4d7719, #6b8513, #8c920b);">
-      <ion-label slot="start"> <img src="../../assets/imgs/webmaster.jpeg" /> <span slot="end">{{post.autor}}</span></ion-label>
-
+    <ion-card-header class="card_header" style="display: flex;">
+      <ion-label slot="start"> <img src="../../assets/imgs/icons8_Circled_User_Male_Skin_Type_5_96px.png" /></ion-label>
+      <ion-label> <span slot="end">{{post.autor}}</span> </ion-label>
       <ion-card-title slot="end">
-        <div><ion-icon slot="start" name="school" size="small"></ion-icon><span slot="end">{{post.faculty}}</span></div>
-        <div><ion-icon slot="start" name="book" size="small"></ion-icon><span slot="end">{{post.course}}</span></div>
+        <div class="title_way" (click)="changeFaculty(post.faculty)"><ion-icon slot="start" name="school" size="small"></ion-icon><span slot="end">{{post.faculty}}</span></div>
+        <div class="title_way" (click)="changeCourse(post.course)"><ion-icon slot="start" name="book" size="small"></ion-icon><span slot="end">{{post.course}}</span></div>
       </ion-card-title>
     </ion-card-header>
 
@@ -91,7 +85,7 @@
         <ion-label slot="end"> <ion-icon slot="start" name="chatboxes" size="small"></ion-icon><span slot="end">{{post.comments.length}}</span></ion-label>
       </ion-item>
 
-      <ion-item>
+      <ion-item (click)="showReponse(post.description,post.responses)">
         <ion-label slot="end"> <ion-icon slot="start" name="bookmarks" size="small"></ion-icon><span slot="end">{{post.responses.length}}</span></ion-label>
       </ion-item>
     </div>

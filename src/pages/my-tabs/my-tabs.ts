@@ -19,7 +19,7 @@ import { SignUpPage } from '../sign-up/sign-up';
 })
 export class MyTabsPage {
 
-  rootPage: string;
+  rootPage:string;
   flohmarktRoot = 'AnnoncePage'
   edocsRoot = 'EdocsPage'
   chatRoomRoot = 'ChatRoomPage'
@@ -29,35 +29,35 @@ export class MyTabsPage {
     {
       title: 'Flohmarkt',
       icon: 'pricetags',
-      url: 'AnnoncePage'
+      url :'AnnoncePage'
     },
     {
       title: 'Edocs',
       icon: 'folder-open',
-      url: 'EdocsPage'
+      url :'EdocsPage'
     },
     {
-      title: 'Chat Room',
+      title: 'chatRoom',
       icon: 'chatbubbles',
-      url: 'ChatRoomPage'
+      url :'ChatsPage'
     },
     {
       title: 'Settings',
       icon: 'settings',
-      url: 'SettingsPage'
+      url :'SettingsPage'
     },
   ];
 
 
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController) {}
 
-  goToLogin() {
+  goToLogin(){
     this.navCtrl.push(LoginPage);
   }
 
 
 
-  goToSignUp() {
+  goToSignUp(){
     this.navCtrl.push(SignUpPage);
   }
 }
