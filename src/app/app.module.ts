@@ -16,6 +16,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { MyTabsPage } from '../pages/my-tabs/my-tabs';
 import { PostsProvider } from '../providers/posts/posts';
 import { AnnoncesProvider } from '../providers/annonces/annonces';
+import { ChatsProvider } from '../providers/chats/chats';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { AnnoncesProvider } from '../providers/annonces/annonces';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PostsProvider,
-    AnnoncesProvider
+    AnnoncesProvider,
+    ChatsProvider
   ]
 })
 export class AppModule {}
