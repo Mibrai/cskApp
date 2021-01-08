@@ -10,6 +10,28 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Recent Conversations
+    </ion-list-header>
 
+    <ion-item *ngFor="let chat of chats" button (click)="openChat(chat)" detail>
+      <ion-label style="
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 2.5%;
+        ">
+        <ion-avatar slot="start">
+          <!-- user avatar -->
+          <img src="../../assets/imgs/avatar.jpg">
+        </ion-avatar>
+        <div>
+          <h2>{{ chat.title }}</h2>
+          <p>last Message (green when not read yet)</p>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
