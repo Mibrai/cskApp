@@ -4,6 +4,12 @@ import { PostsProvider } from '../../providers/posts/posts';
 import { FacultyProvider } from '../../providers/faculty/faculty';
 import { CourseProvider } from '../../providers/course/course';
 import { ShowReponssePage } from '../show-reponsse/show-reponsse';
+import { File } from '@ionic-native/file';
+import { HTTP } from '@ionic-native/http/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { Downloader, DownloadRequest ,NotificationVisibility } from '@ionic-native/downloader';
+import { ShowCommentPage } from '../show-comment/show-comment';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 
 /**
  * Generated class for the EdocsPage page.
@@ -28,10 +34,14 @@ export class EdocsPage {
   selectedFaculty:any = "";
   selectedCourse:any = "";
   courseOfFaculty :any = [];
+  downloadFile : any;
+
+   file_path :any = 'https://clausthaler-kameruner.com/edocs/files/';
 
   state : boolean = false;
   postByFaculty :any = [];
   postByCourse : any = [];
+  private fileTransfer: FileTransferObject;
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
@@ -39,7 +49,11 @@ export class EdocsPage {
       public facultyService : FacultyProvider,
       public courseService : CourseProvider,
       public alertCtrl : AlertController,
-      public modalCtrl: ModalController ) {
+      public modalCtrl: ModalController,
+      private file: File,
+      private transfer: FileTransfer,
+      private downloader : Downloader,
+      private documentViewer : DocumentViewer ) {
 
   }
 
@@ -73,59 +87,17 @@ export class EdocsPage {
 
   }
 
-  showComments(listComment :any = []){
+  async showComments(idPost :any ,post_desc : string ,listComment :any = []){
 
-      console.log(" list of all comments : \n "+listComment);
-      this.tabCmt = listComment;
-      //this.selectedComments += "<div class='form_cmt'><ion-list><ion-item><ion-textarea placeholder='Entrez votre commentaire ici'></ion-textarea></ion-item><ion-item><button ion-button color='secondary' icon-only><ion-icon name='arrow-forward-circle-outline'></ion-icon></button></ion-item></ion-list></div>";
-      let i = 0;
-      while( i < this.tabCmt.length){
-        this.selectedComments += "<div class='designAlert'> <ion-card> <ion-card-header class='card_header'> <ion-card-title> <div class='class_autor'> <img src='../../assets/imgs/bill.jpg' /><span>"+this.tabCmt[i].autor+"</span></div> </ion-card-title> </ion-card-header> <ion-card-content style='display: block;'><ion-item> <ion-label>"+this.tabCmt[i].content+" </ion-label></ion-item> <p>&nbsp;</p> <ion-item class='createdAt'><ion-label class='footer_alert'> "+this.tabCmt[i].createdAt+" </ion-label></ion-item> </ion-card-content> </ion-card> </div>";
-        i++;
-      }
+    let modalComment =  await this.modalCtrl.create(ShowCommentPage ,{ comments : listComment , desc :post_desc ,id_post :idPost},{cssClass : 'designModal'});
 
-     // this.selectedComments += "</div>";
-      let alertCmt = this.alertCtrl.create({
-        title:'Commentaires',
-        cssClass: 'designAlert ,createdAt,class_autor,card_header,footer_alert ,form_cmt',
-        message: this.selectedComments,
-        inputs:[
-          {
-            name:'cmt',
-            type: 'textarea',
-            placeholder:'Entrez votre commentaire ici...'
-          }
-        ],
-        buttons: [
-          {
-            text: 'Poster',
-            role: 'ok',
-            cssClass:'designAlertBtn',
-            handler: (alertData) => {
-              console.log(" Input \n"+alertData.cmt);
-            }
-          },
-          {
-            text: 'Fermer',
-            role: 'cancel',
-            cssClass: 'designAlertBtn',
-            handler: () => {
-              this.selectedComments = "";
-            }
-          }
-        ]
-      });
-
-      alertCmt.present();
-
-
-
+    return await modalComment.present();
 
   }
 
-  async showReponse(post_description:String,listResponse:any = []){
+  async showReponse(idPost:string ,post_description:String,listResponse:any = []){
 
-    let modalResponse =  await this.modalCtrl.create(ShowReponssePage ,{ responses : listResponse , desc :post_description });
+    let modalResponse =  await this.modalCtrl.create(ShowReponssePage ,{ responses : listResponse , desc :post_description, id_post : idPost }, {cssClass : 'designModal'});
 
      return await modalResponse.present();
   }
@@ -202,5 +174,75 @@ export class EdocsPage {
     this.selectedCourse = course;
     this.onSelectedCourse();
   }
+
+   onDownloadFile(urlFile:String){
+
+   let url = encodeURI(this.file_path+urlFile);
+   this.fileTransfer = this.transfer.create();
+
+   console.log(" Url file = "+this.file_path+urlFile);
+   this.fileTransfer.download(url, this.file.dataDirectory + urlFile, true).then((entry) => {
+     //here logging our success downloaded file path in mobile.
+     console.log('download completed: ' + entry.toURL());
+
+     let alert = this.alertCtrl.create({
+      title: 'Download Success',
+      message: this.file.dataDirectory+urlFile,
+      buttons: [{
+        text : 'Ok',
+        role : 'cancel',
+        cssClass : 'designAlertBtn'
+      }]
+    });
+    alert.present();
+     // open downloaded file
+     this.downloadFile = entry.toURL();
+
+   }).catch((error) => {
+     //here logging an error.
+     let alert = this.alertCtrl.create({
+      title: 'Download Error',
+      message: JSON.stringify(error),
+      buttons: ['Cancel']
+    });
+    alert.present();
+     console.log('download failed: ' + JSON.stringify(error));
+   });
+
+
+  }
+
+  downloadHandler(urlFile:string) {
+    // To download the PDF file
+      this.onDownloadFile(urlFile);
+      let request: DownloadRequest = {
+        uri: this.file_path+urlFile,
+        title: 'CskApp Download '+urlFile,
+        description: '',
+        mimeType: '',
+        visibleInDownloadsUi: true,
+        notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
+        destinationInExternalFilesDir: {
+            dirType: 'Downloads',
+            subPath: urlFile
+        }
+    };
+
+    this.downloader.download(request)
+    .then((location: string) => {
+      console.log('File downloaded at:'+location);
+      this.openFile(location);
+    })
+    .catch((error: any) => console.error(error));
+
+    }
+
+    openFile(path : string){
+      const options : DocumentViewerOptions = {
+        title : "CSK Doc Viewer"
+      }
+      this.documentViewer.viewDocument(path,'application/pdf',options);
+    }
+
 
 }

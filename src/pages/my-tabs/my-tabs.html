@@ -22,8 +22,8 @@
   </ion-content>
 
   <ion-footer>
-    <ion-toolbar color="toolbar"  class="style_footer">
-      <button ion-button color="toolbar" class="btn_footer"  expand="full" fill="outline" size="large">
+    <ion-toolbar color="toolbar"  class="style_footer" style="text-align: center; display:flex;">
+      <button ion-button color="toolbar" class="btn_footer"  expand="full" fill="outline" size="large" style="display: flex; text-align:center;">
         <ion-icon name="help-circle-outline" slot="start" size="large"></ion-icon>
         <span  slot="end">  &nbsp; &nbsp; Help</span>
       </button>
@@ -34,6 +34,6 @@
 <ion-nav #mymenu [root] = "rootPage" ></ion-nav>
 
 
-<ion-tabs color="toolbar">
+<ion-tabs color="toolbar" tabsPlacement="bottom">
     <ion-tab *ngFor="let page of pageList" [root]="page.url" [tabTitle]="page.title" [tabIcon]="page.icon"></ion-tab>
 </ion-tabs>

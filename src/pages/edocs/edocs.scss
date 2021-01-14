@@ -67,6 +67,10 @@ ion-card-header img{
   border-radius: 1%;
   font-size:18px;
 }
+.card_option ion-item a{
+  text-decoration: none;
+  color:#000;
+}
 
 .title_way:hover{
   box-shadow: 3px 3px 20px 1px gainsboro;
@@ -75,6 +79,7 @@ ion-card-header img{
 
 .card_option ion-item:hover{
   box-shadow: 3px 3px 20px 1px gainsboro;
+  border-radius: 60%;
 }
 
 

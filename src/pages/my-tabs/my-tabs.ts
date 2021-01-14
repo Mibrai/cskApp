@@ -20,7 +20,7 @@ import { SignUpPage } from '../sign-up/sign-up';
 export class MyTabsPage {
 
   rootPage:string;
-  flohmarktRoot = 'AnnoncePage'
+  flohmarktRoot = 'FlohmarktPage'
   edocsRoot = 'EdocsPage'
   chatRoomRoot = 'ChatRoomPage'
   settingsRoot = 'SettingsPage'
@@ -29,7 +29,7 @@ export class MyTabsPage {
     {
       title: 'Flohmarkt',
       icon: 'pricetags',
-      url :'AnnoncePage'
+      url :'FlohmarktPage'
     },
     {
       title: 'Edocs',

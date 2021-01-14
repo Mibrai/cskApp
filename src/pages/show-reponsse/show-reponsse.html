@@ -5,18 +5,22 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="toolbar">
-    <ion-title>showReponsse</ion-title>
-    <button ion-button (click)="close()" color="toolbar" icon-only><ion-icon name="arrow-back-circle-outline"></ion-icon></button>
+  <ion-navbar color="toolbar" style="display:flex;">
+    <ion-title item-end>Interventions</ion-title>
+    <button ion-button (click)="close()" color="toolbar" item-start icon-only><ion-icon name="close-circle-outline" size="large"></ion-icon></button>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-label>{{desc_post}}</ion-label>
+  <ion-item class="item_subject_title">
+    <ion-label><ion-icon name="document-text-outline" color="toolbar" size="large"></ion-icon>Sujet :</ion-label>
   </ion-item>
 
-  <ion-card  *ngFor="let post of  reponses">
+  <ion-item class="item_subject" text-wrap>
+    <ion-label item-content>{{desc_post}}</ion-label>
+  </ion-item>
+
+  <!--<ion-card  *ngFor="let post of  reponses">
     <ion-card-header class="card_header" style="display: flex;">
       <ion-label slot="start"> <img src="../../assets/imgs/icons8_Circled_User_Male_Skin_Type_5_96px.png" /></ion-label>
       <ion-label> <span slot="end">{{post.autor}}</span> </ion-label>
@@ -44,18 +48,51 @@
 
     <div class="card_option" style="display: flex;">
       <ion-item>
-        <ion-label slot="end"> <ion-icon slot="start" name="link" size="small"></ion-icon></ion-label>
-      </ion-item>
+        <ion-label slot="end"> <ion-icon slot="start" name="attach-outline" size="large"></ion-icon></ion-label>
 
-      <ion-item>
-        <ion-label slot="end"> <ion-icon slot="start" name="chatboxes" size="small"></ion-icon></ion-label>
-      </ion-item>
+        <ion-label slot="end"> <ion-icon slot="start" name="thumbs-down-outline" size="large"></ion-icon></ion-label>
 
-      <ion-item>
-        <ion-label slot="end"> <ion-icon slot="start" name="bookmarks" size="small"></ion-icon></ion-label>
+        <ion-label slot="end"> <ion-icon slot="start" name="thumbs-up-outline" size="large"></ion-icon></ion-label>
       </ion-item>
     </div>
 
     </ion-card-content>
-  </ion-card>
+  </ion-card>-->
+
+  <div class="bloc_cmt" *ngFor="let post of  reponses">
+    <ion-item class="header_cmt">
+
+      <ion-label style="display: flex;" item-start>
+        <ion-label slot="start"><ion-icon name="person-circle-outline" size="large" slot="start"></ion-icon>{{post.autor}}</ion-label>
+      </ion-label>
+
+      <ion-label item-end>
+        <div class="title_way"><ion-icon slot="start" name="school" size="small"></ion-icon><span slot="end">{{post.faculty}}</span></div>
+        <div class="title_way"><ion-icon slot="start" name="book" size="small"></ion-icon><span slot="end">{{post.course}}</span></div>
+      </ion-label>
+
+    </ion-item>
+
+    <ion-item class="content_cmt" text-wrap>
+      <ion-label item-content>
+        {{post.description}}
+          <br>
+          <span class="span_createdAt">{{post.createdAt}}</span>
+      </ion-label>
+    </ion-item>
+
+    <ion-item style="display: flex;" class="footer_cmt">
+      <ion-label item-start class="label_footer"><a  href= "#" (click)="downloadHandler(post.urlFile)" *ngIf=" post.urlFile != null ">  <ion-icon slot="start" name="document-attach-outline" size="small"></ion-icon><span *ngIf="post.urlFile != null ">1</span> <span *ngIf="post.urlFile == null ">0</span></a></ion-label>
+
+      <ion-label item-content class="label_center"> <ion-icon name="thumbs-down-outline" size="small"></ion-icon></ion-label>
+
+      <ion-label item-end class="label_footer"> <ion-icon  name="thumbs-up-outline" size="small"></ion-icon></ion-label>
+    </ion-item>
+
+</div>
+
+
+  <ion-fab  top right>
+    <button ion-fab color="toolbar" (click)="formPost()"><ion-icon name="add-circle-outline"></ion-icon></button>
+  </ion-fab>
 </ion-content>

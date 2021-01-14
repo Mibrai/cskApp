@@ -4,23 +4,27 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from "@ionic-native/file";
+import { HTTP } from '@ionic-native/http/ngx';
+import { Downloader} from '@ionic-native/downloader';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+import { FileChooser } from '@ionic-native/file-chooser';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { SignUpPage } from '../pages/sign-up/sign-up';
-import { AnnoncePage } from '../pages/annonce/annonce';
-import { ChatsPage } from '../pages/chats/chats';
 import { SingleChatPage } from '../pages/single-chat/single-chat';
-import { EdocsPage } from '../pages/edocs/edocs';
-import { SettingsPage } from '../pages/settings/settings';
 import { MyTabsPage } from '../pages/my-tabs/my-tabs';
 import { PostsProvider } from '../providers/posts/posts';
 import { AnnoncesProvider } from '../providers/annonces/annonces';
 import { FacultyProvider } from '../providers/faculty/faculty';
 import { CourseProvider } from '../providers/course/course';
 import { ShowReponssePage } from '../pages/show-reponsse/show-reponsse';
+import { ShowCommentPage } from '../pages/show-comment/show-comment';
 import { ChatsProvider } from '../providers/chats/chats';
+import { NewPostPage } from '../pages/new-post/new-post';
 
 @NgModule({
   declarations: [
@@ -29,8 +33,10 @@ import { ChatsProvider } from '../providers/chats/chats';
     LoginPage,
     SignUpPage,
     ShowReponssePage,
+    ShowCommentPage,
     MyTabsPage,
-    SingleChatPage
+    SingleChatPage,
+    NewPostPage
   ],
   imports: [
     BrowserModule,
@@ -44,8 +50,10 @@ import { ChatsProvider } from '../providers/chats/chats';
     LoginPage,
     SignUpPage,
     ShowReponssePage,
+    ShowCommentPage,
     MyTabsPage,
-    SingleChatPage
+    SingleChatPage,
+    NewPostPage
   ],
   providers: [
     StatusBar,
@@ -55,7 +63,14 @@ import { ChatsProvider } from '../providers/chats/chats';
     AnnoncesProvider,
     FacultyProvider,
     CourseProvider,
-    ChatsProvider
+    ChatsProvider,
+    File,
+    HTTP,
+    FileTransfer,
+    FileTransferObject,
+    Downloader,
+    DocumentViewer,
+    FileChooser
   ]
 })
 export class AppModule { }

@@ -5,8 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="toolbar">
-    <ion-title>E.docs</ion-title>
+  <ion-navbar color="toolbar" style="display:flex; color:white;">
+   <ion-icon name="menu-outline" color="toolbar" size="large" item-start menuToggle></ion-icon>
+    <ion-title item-end>Forum Archives</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -14,11 +15,11 @@
   <ion-label class="label-title">Archives  <ion-icon slot="start" name="folder" size="large"></ion-icon></ion-label>
 
   <div class="div_form">
-    <ion-label style="font-size:20px;"> <span>Filtrer</span> <ion-icon name="filter-outline"></ion-icon></ion-label>
+   <!-- <ion-label style="font-size:20px;"> <span>Filtrer</span> <ion-icon name="filter-outline"></ion-icon></ion-label> -->
     <ion-list>
       <ion-item>
-        <ion-label color="primary">Par filiere <ion-icon name="school-outline"></ion-icon></ion-label>
-        <ion-select multiple="false" placeholder="Filtrer par filiere" [(ngModel)]="selectedFaculty" (ngModelChange)="onSelectFaculty()">
+       <!-- <ion-label color="primary">Par filiere <ion-icon name="school-outline"></ion-icon></ion-label> -->
+        <ion-select multiple="false" placeholder="Filtrer par filiere" [(ngModel)]="selectedFaculty" (ngModelChange)="onSelectFaculty()" full expand>
           <ion-option disabled>----Cours de Langue -----</ion-option>
           <ion-option>A1</ion-option>
           <ion-option>A2</ion-option>
@@ -32,8 +33,8 @@
       </ion-item>
 
       <ion-item>
-        <ion-label color="primary">Par Matiere <ion-icon name="book-outline"></ion-icon></ion-label>
-        <ion-select multiple="false" placeholder="Filtrer par matiere" [(ngModel)]="selectedCourse" (ngModelChange)="onSelectedCourse()">
+       <!-- <ion-label color="primary">Par Matiere <ion-icon name="book-outline"></ion-icon></ion-label> -->
+        <ion-select multiple="false" placeholder="Filtrer par matiere" [(ngModel)]="selectedCourse" (ngModelChange)="onSelectedCourse()" full expand>
           <ion-option disabled>----Cours de Langue -----</ion-option>
           <ion-option>Lesen</ion-option>
           <ion-option>Hören</ion-option>
@@ -61,7 +62,7 @@
     </ion-card-header>
 
     <ion-card-content style="display: block;">
-      <div class="card_content">
+      <div class="card_content" text-wrap>
         {{post.description}}
       </div>
 
@@ -71,26 +72,39 @@
 
       <ion-item slot="start"></ion-item>
       <ion-item slot="end">
-        <ion-label slot="end"> <ion-icon slot="start" name="calendar" size="small"></ion-icon><span slot="end">{{post.createdAt}}</span></ion-label>
+        <ion-label slot="end"><span slot="end">{{post.createdAt}}</span></ion-label>
       </ion-item>
 
     </div>
 
     <div class="card_option" style="display: flex;">
       <ion-item>
-        <ion-label slot="end"> <ion-icon slot="start" name="link" size="small"></ion-icon><span>{{post.autor}}</span></ion-label>
+        <ion-label slot="end"><a  href= "#" (click)="downloadHandler(post.urlFile)" *ngIf=" post.urlFile != null ">  <ion-icon slot="start" name="document-attach-outline" size="large"></ion-icon><span *ngIf="post.urlFile != null ">1</span> <span *ngIf="post.urlFile == null ">0</span></a></ion-label>
       </ion-item>
 
-      <ion-item (click)="showComments(post.comments)">
-        <ion-label slot="end"> <ion-icon slot="start" name="chatboxes" size="small"></ion-icon><span slot="end">{{post.comments.length}}</span></ion-label>
+      <ion-item (click)="showComments(post.id,post.description,post.comments)">
+        <ion-label slot="end"><ion-icon slot="start" name="chatbubble-ellipses-outline" size="large"></ion-icon><span slot="end">{{post.comments.length}}</span></ion-label>
       </ion-item>
 
-      <ion-item (click)="showReponse(post.description,post.responses)">
-        <ion-label slot="end"> <ion-icon slot="start" name="bookmarks" size="small"></ion-icon><span slot="end">{{post.responses.length}}</span></ion-label>
+      <ion-item (click)="showReponse(post.id,post.description,post.responses)">
+        <ion-label slot="end"> <ion-icon slot="start" name="bookmarks-outline" size="large"></ion-icon><span slot="end">{{post.responses.length}}</span></ion-label>
       </ion-item>
     </div>
 
     </ion-card-content>
   </ion-card>
+
+  <ion-fab  middle right>
+    <button ion-fab color="toolbar"><ion-icon name="apps-outline"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab color="toolbar"><ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-fab color="toolbar"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab color="toolbar"><ion-icon name="logo-youtube"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="left">
+      <button ion-fab color="toolbar"><ion-icon name="logo-vimeo"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
 
 </ion-content>

@@ -5,11 +5,70 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
-    <ion-title>flohmarkt</ion-title>
-  </ion-navbar>
+  <ion-navbar color="toolbar" style="display:flex; color:white;">
+    <ion-icon name="menu-outline" color="toolbar" size="large" item-start menuToggle></ion-icon>
+     <ion-title item-end>Flohmarkt</ion-title>
+   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+
+  <ion-card  *ngFor="let data_ of  data">
+    <ion-card-header class="card_header" style="display: block;">
+      <ion-label style="display: flex;">
+        <ion-icon name="person-circle-outline" size="large"></ion-icon>
+        <span>{{data_.autor}}</span>
+        <span class="span_categorie" item-end>{{data_.categorie}}</span>
+      </ion-label>
+
+      <ion-card-title>
+        {{data_.title}}
+      </ion-card-title>
+
+    </ion-card-header>
+
+    <ion-card-content style="display: block;">
+      <div class="div_title">
+        {{data_.title}}
+      </div>
+
+      <div class="card_image">
+        <ion-img [src]="data_.urlImage" ></ion-img>
+      </div>
+
+      <div class="card_content" text-wrap>
+        <ion-item text-wrap>
+          <ion-label item-content>
+              {{data_.description}}
+              <p>
+                <span class="span_start" item-start><ion-icon name="calendar-outline" size="large"></ion-icon>{{data_.dateStart}}</span>
+                <span class="span_time" item-end><ion-icon name="alarm-outline" size="large"></ion-icon>{{data_.time}}</span>
+              </p>
+              <p class="location">
+                <ion-icon name="location-outline" size="large"></ion-icon><span class="span_location">{{data_.location}}</span>
+              </p>
+                <p *ngIf="data_.link != '' ">
+                  <br>
+                  <ion-icon name="globe-outline" size="large"></ion-icon> <span class="link"><a href="#">{{data_.link}}</a></span>
+              </p>
+          </ion-label>
+        </ion-item>
+      </div>
+
+        <div class="card_footer" style="display: flex;">
+          <ion-item item-start>
+            <ion-label slot="end"><span slot="end"><ion-icon name="logo-euro"></ion-icon>{{data_.price}}</span></ion-label>
+          </ion-item>
+
+          <ion-item item-end>
+            <ion-label slot="end"><span slot="end"><ion-icon name="car-outline"></ion-icon>{{data_.delivry}} Euro</span></ion-label>
+          </ion-item>
+
+        </div>
+
+
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>

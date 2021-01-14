@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController,ModalController } from 'ionic-angular';
+import { NewPostPage } from '../new-post/new-post';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { Downloader, DownloadRequest ,NotificationVisibility } from '@ionic-native/downloader';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 
 /**
  * Generated class for the ShowReponssePage page.
@@ -19,10 +24,24 @@ export class ShowReponssePage {
   reponses : any = [];
   selectedComments : string = "";
   tabCmt :any = [];
+  idPost :any;
+  downloadFile : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams , public alertCtrl: AlertController) {
+  file_path :any = 'https://clausthaler-kameruner.com/edocs/files/';
+
+  private fileTransfer: FileTransferObject;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams ,
+     public alertCtrl: AlertController,
+     private modalCtrl : ModalController,
+     private file: File,
+     private transfer: FileTransfer,
+     private downloader : Downloader,
+     private documentViewer : DocumentViewer) {
     this.desc_post = navParams.get('desc');
     this.reponses = navParams.get('responses');
+    this.idPost = navParams.get('id_post');
   }
 
   ionViewDidLoad() {
@@ -78,7 +97,82 @@ export class ShowReponssePage {
 
     alertCmt.present();
 
-
 }
+
+//add new Post
+async formPost(){
+  let modalResponse =  await this.modalCtrl.create(NewPostPage ,{ post_id : this.idPost },{cssClass : 'designModal'});
+
+    return await modalResponse.present();
+  }
+
+  onDownloadFile(urlFile:String){
+
+    let url = encodeURI(this.file_path+urlFile);
+    this.fileTransfer = this.transfer.create();
+
+    console.log(" Url file = "+this.file_path+urlFile);
+    this.fileTransfer.download(url, this.file.dataDirectory + urlFile, true).then((entry) => {
+      //here logging our success downloaded file path in mobile.
+      console.log('download completed: ' + entry.toURL());
+
+      let alert = this.alertCtrl.create({
+       title: 'Download Success',
+       message: this.file.dataDirectory+urlFile,
+       buttons: [{
+         text : 'Ok',
+         role : 'cancel',
+         cssClass : 'designAlertBtn'
+       }]
+     });
+     alert.present();
+      // open downloaded file
+      this.downloadFile = entry.toURL();
+
+    }).catch((error) => {
+      //here logging an error.
+      let alert = this.alertCtrl.create({
+       title: 'Download Error',
+       message: JSON.stringify(error),
+       buttons: ['Cancel']
+     });
+     alert.present();
+      console.log('download failed: ' + JSON.stringify(error));
+    });
+
+
+   }
+
+   downloadHandler(urlFile:string) {
+     // To download the PDF file
+       this.onDownloadFile(urlFile);
+       let request: DownloadRequest = {
+         uri: this.file_path+urlFile,
+         title: 'CskApp Download '+urlFile,
+         description: '',
+         mimeType: '',
+         visibleInDownloadsUi: true,
+         notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
+         destinationInExternalFilesDir: {
+             dirType: 'Downloads',
+             subPath: urlFile
+         }
+     };
+
+     this.downloader.download(request)
+     .then((location: string) => {
+       console.log('File downloaded at:'+location);
+       this.openFile(location);
+     })
+     .catch((error: any) => console.error(error));
+
+     }
+
+     openFile(path : string){
+       const options : DocumentViewerOptions = {
+         title : "CSK Doc Viewer"
+       }
+       this.documentViewer.viewDocument(path,'application/pdf',options);
+     }
 
 }
