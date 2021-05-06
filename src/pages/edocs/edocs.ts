@@ -5,7 +5,6 @@ import { FacultyProvider } from '../../providers/faculty/faculty';
 import { CourseProvider } from '../../providers/course/course';
 import { ShowReponssePage } from '../show-reponsse/show-reponsse';
 import { File } from '@ionic-native/file';
-import { HTTP } from '@ionic-native/http/ngx';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { Downloader, DownloadRequest ,NotificationVisibility } from '@ionic-native/downloader';
 import { ShowCommentPage } from '../show-comment/show-comment';

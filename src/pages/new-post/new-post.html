@@ -6,27 +6,26 @@
 -->
 <ion-header>
   <ion-navbar color="toolbar" style="display:flex;">
-    <ion-title slot="end">Repondre !!</ion-title>
-    <button ion-button (click)="close()" color="toolbar" slot="start" icon-only><ion-icon name="close-circle-outline"></ion-icon></button>
+    <ion-title slot="start">Repondre !!</ion-title>
+    <button ion-button (click)="close()" color="toolbar" slot="end" icon-only><ion-icon name="close-circle-outline" style="display: flex; margin-top:10px; background-repeat: no-repeat;"></ion-icon></button>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <form (ngSubmit)="submitForm()">
-    <ion-item>
-      <ion-label>Titre</ion-label>
-      <ion-input type="text" [(ngModel)]="title" name="title"></ion-input>
+  <form [formGroup]="form" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+    <ion-item class="inputField">
+      <ion-label floating>Titre</ion-label>
+      <ion-input type="text" [(ngModel)]="title" name="title" [ngModelOptions]="{standalone: true}" required></ion-input>
     </ion-item>
-    <ion-item style="display: block;">
-      <ion-label>Description</ion-label>
-      <ion-textarea [(ngModel)]="description" name="description"></ion-textarea>
+    <ion-item class="inputField" style="display: block;">
+      <ion-label floating>Description</ion-label>
+      <ion-textarea [(ngModel)]="description" name="description" [ngModelOptions]="{standalone: true}"></ion-textarea>
     </ion-item>
-    <ion-item>
-      <ion-label>Source</ion-label>
-      <ion-input type="file" [(ngModel)]="file" name="file" ></ion-input>
+    <ion-item class="input_file">
+      <ion-input type="file" ([ngModel])="myFile" (change) = "uploadFileApi($event)"> </ion-input>
     </ion-item>
-    <button ion-button type="submit" color="toolbar" block icon-only><span>Poster</span><ion-icon name="bookmark-outline" size="small"></ion-icon></button>
+    <button ion-button  class="btn_response" type="submit" color="toolbar" block icon-only><span>Poster</span></button>
   </form>
 
 </ion-content>

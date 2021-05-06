@@ -10,6 +10,9 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Downloader} from '@ionic-native/downloader';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { FileChooser } from '@ionic-native/file-chooser';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { DocumentPicker } from '@ionic-native/document-picker/ngx';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -41,7 +44,8 @@ import { NewPostPage } from '../pages/new-post/new-post';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -70,7 +74,9 @@ import { NewPostPage } from '../pages/new-post/new-post';
     FileTransferObject,
     Downloader,
     DocumentViewer,
-    FileChooser
+    FileChooser,
+    FilePath,
+    DocumentPicker
   ]
 })
 export class AppModule { }

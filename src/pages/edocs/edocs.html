@@ -6,19 +6,17 @@
 -->
 <ion-header>
   <ion-navbar color="toolbar" style="display:flex; color:white;">
-   <ion-icon name="menu-outline" color="toolbar" size="large" item-start menuToggle></ion-icon>
-    <ion-title item-end>Forum Archives</ion-title>
+   <ion-icon name="menu-outline" color="toolbar" size="large" slot="start" item-start menuToggle></ion-icon>
+    <ion-title slot="end" item-end >Forum Archives</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-label class="label-title">Archives  <ion-icon slot="start" name="folder" size="large"></ion-icon></ion-label>
+  <ion-label class="label-title" color="toolbar">Archives  <ion-icon slot="start" name="folder" size="large"></ion-icon></ion-label>
 
   <div class="div_form">
-   <!-- <ion-label style="font-size:20px;"> <span>Filtrer</span> <ion-icon name="filter-outline"></ion-icon></ion-label> -->
     <ion-list>
       <ion-item>
-       <!-- <ion-label color="primary">Par filiere <ion-icon name="school-outline"></ion-icon></ion-label> -->
         <ion-select multiple="false" placeholder="Filtrer par filiere" [(ngModel)]="selectedFaculty" (ngModelChange)="onSelectFaculty()" full expand>
           <ion-option disabled>----Cours de Langue -----</ion-option>
           <ion-option>A1</ion-option>
@@ -51,6 +49,40 @@
 
   </div>
 
+  <div class="bloc_cmt" *ngFor="let post of  data">
+    <ion-item class="header_cmt">
+
+      <ion-label style="display: flex;" item-start>
+        <ion-label slot="start"><ion-icon name="person-circle-outline" size="large" slot="start"></ion-icon>{{post.autor}}</ion-label>
+      </ion-label>
+
+      <ion-label item-end>
+        <div class="title_way" (click)="changeFaculty(post.faculty)"><ion-icon slot="start" name="school" size="small"></ion-icon><span slot="end">{{post.faculty}}</span></div>
+        <div class="title_way" (click)="changeCourse(post.course)"><ion-icon slot="start" name="book" size="small"></ion-icon><span slot="end">{{post.course}}</span></div>
+      </ion-label>
+
+    </ion-item>
+
+    <ion-item class="content_cmt" text-wrap>
+      <ion-label item-content>
+        {{post.description}}
+          <br>
+          <span class="span_createdAt">{{post.createdAt}}</span>
+      </ion-label>
+    </ion-item>
+
+    <ion-item style="display: flex;" class="footer_cmt">
+      <ion-label slot="end"><a  href= "#" (click)="downloadHandler(post.urlFile)" *ngIf=" post.urlFile != null ">  <ion-icon slot="start" name="document-attach-outline" size="large"></ion-icon><span *ngIf="post.urlFile != null ">1</span> <span *ngIf="post.urlFile == null ">0</span></a></ion-label>
+
+        <ion-label class="label_center" (click)="showComments(post.id,post.description,post.comments)" slot="end"><ion-icon slot="start" name="chatbubble-ellipses-outline" size="large"></ion-icon><span slot="end">{{post.comments.length}}</span></ion-label>
+
+        <ion-label class="label_footer"  (click)="showReponse(post.id,post.description,post.responses)" slot="end"> <ion-icon slot="start" name="bookmarks-outline" size="large"></ion-icon><span slot="end">{{post.responses.length}}</span></ion-label>
+    </ion-item>
+
+
+
+  </div>
+  <!--
   <ion-card  *ngFor="let post of  data">
     <ion-card-header class="card_header" style="display: flex;">
       <ion-label slot="start"> <img src="../../assets/imgs/icons8_Circled_User_Male_Skin_Type_5_96px.png" /></ion-label>
@@ -92,7 +124,7 @@
     </div>
 
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
   <ion-fab  middle right>
     <button ion-fab color="toolbar"><ion-icon name="apps-outline"></ion-icon></button>
