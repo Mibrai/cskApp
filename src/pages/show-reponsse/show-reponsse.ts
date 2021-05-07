@@ -25,6 +25,8 @@ export class ShowReponssePage {
   selectedComments : string = "";
   tabCmt :any = [];
   idPost :any;
+  selectedFaculty : any;
+  selectedCourse : any;
   downloadFile : any;
 
   file_path :any = 'https://clausthaler-kameruner.com/edocs/files/';
@@ -42,6 +44,8 @@ export class ShowReponssePage {
     this.desc_post = navParams.get('desc');
     this.reponses = navParams.get('responses');
     this.idPost = navParams.get('id_post');
+    this.selectedFaculty = navParams.get('choosedFaculty');
+    this.selectedCourse = navParams.get('choosedCourse');
   }
 
   ionViewDidLoad() {
@@ -101,7 +105,7 @@ export class ShowReponssePage {
 
 //add new Post
 async formPost(){
-  let modalResponse =  await this.modalCtrl.create(NewPostPage ,{ post_id : this.idPost },{cssClass : 'designModal'});
+  let modalResponse =  await this.modalCtrl.create(NewPostPage ,{ post_id : this.idPost , choosedFaculty : this.selectedFaculty, choosedCourse : this.selectedCourse },{cssClass : 'designModal'});
 
     return await modalResponse.present();
   }

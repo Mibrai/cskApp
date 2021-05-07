@@ -76,7 +76,7 @@
 
         <ion-label class="label_center" (click)="showComments(post.id,post.description,post.comments)" slot="end"><ion-icon slot="start" name="chatbubble-ellipses-outline" size="large"></ion-icon><span slot="end">{{post.comments.length}}</span></ion-label>
 
-        <ion-label class="label_footer"  (click)="showReponse(post.id,post.description,post.responses)" slot="end"> <ion-icon slot="start" name="bookmarks-outline" size="large"></ion-icon><span slot="end">{{post.responses.length}}</span></ion-label>
+        <ion-label class="label_footer"  (click)="showReponse(post.id,post.description,post.responses,post.faculty,post.course)" slot="end"> <ion-icon slot="start" name="bookmarks-outline" size="large"></ion-icon><span slot="end">{{post.responses.length}}</span></ion-label>
     </ion-item>
 
 

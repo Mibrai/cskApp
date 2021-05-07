@@ -28,8 +28,8 @@ export class EdocsPage {
   allPost: any = [];
   selectedComments : string = "";
   tabCmt :any = [];
-  allFaculty :any = [];
-  allCourse : any = [];
+  public static allFaculty :any = [];
+  public static allCourse : any = [];
   selectedFaculty:any = "";
   selectedCourse:any = "";
   courseOfFaculty :any = [];
@@ -66,13 +66,13 @@ export class EdocsPage {
 
     //get all faculty from api
     this.facultyService.getAllFaculty().subscribe(faculties => {
-     this.allFaculty = JSON.parse(JSON.stringify(faculties));
+     EdocsPage.allFaculty = JSON.parse(JSON.stringify(faculties));
     });
 
     //get all Course from api
     this.courseService.getAllCourse().subscribe(courses => {
 
-      this.allCourse = JSON.parse(JSON.stringify(courses));
+      EdocsPage.allCourse = JSON.parse(JSON.stringify(courses));
     });
     //get all post from  api
     this.allPost = this.postService.getAllPost().subscribe(posts => {
@@ -94,9 +94,9 @@ export class EdocsPage {
 
   }
 
-  async showReponse(idPost:string ,post_description:String,listResponse:any = []){
+  async showReponse(idPost:string ,post_description:String,listResponse:any = [] ,selectedFaculty:String , selectedCourse:String){
 
-    let modalResponse =  await this.modalCtrl.create(ShowReponssePage ,{ responses : listResponse , desc :post_description, id_post : idPost }, {cssClass : 'designModal'});
+    let modalResponse =  await this.modalCtrl.create(ShowReponssePage ,{ responses : listResponse , desc :post_description, id_post : idPost, choosedFaculty : selectedFaculty, choosedCourse : selectedCourse }, {cssClass : 'designModal'});
 
      return await modalResponse.present();
   }
@@ -105,10 +105,10 @@ export class EdocsPage {
 
     let i = 0;
     //list all course for this faculty
-    console.log(" Slected faculty \t "+this.getCodeFacultyByName(this.selectedFaculty));
-    this.courseService.getCoursesByFaculty(this.getCodeFacultyByName(this.selectedFaculty)).subscribe(courses => {
+    console.log(" Slected faculty \t "+EdocsPage.getCodeFacultyByName(this.selectedFaculty));
+    this.courseService.getCoursesByFaculty(EdocsPage.getCodeFacultyByName(this.selectedFaculty)).subscribe(courses => {
       this.courseOfFaculty = JSON.parse(JSON.stringify(courses));
-      this.allCourse = [];
+      EdocsPage.allCourse = [];
       for(let cours of this.courseOfFaculty){
         let cs : any = {
           code : cours.code,
@@ -117,13 +117,13 @@ export class EdocsPage {
           codeFaculty : cours.codeFaculty
         };
 
-        this.allCourse.push(cs);
+        EdocsPage.allCourse.push(cs);
 
       }
       console.log(" Course of faculty "+this.selectedFaculty+" \n"+this.courseOfFaculty);
     });
 
-    this.allCourse = ( this.courseOfFaculty.length > 0) ?  this.courseOfFaculty : this.allCourse;
+    EdocsPage.allCourse = ( this.courseOfFaculty.length > 0) ?  this.courseOfFaculty : EdocsPage.allCourse;
 
     this.postByFaculty = [];
 
@@ -153,12 +153,33 @@ export class EdocsPage {
       this.data = this.postByCourse;
   }
 
-  getCodeFacultyByName(name:String){
+  /**
+   * search and return the code for the given faculty
+   * @param title String
+   * @returns  code as String
+   */
+  public static getCodeFacultyByName(title:String){
     let code : string = "";
-    for(let faculty of this.allFaculty){
+    for(let faculty of EdocsPage.allFaculty){
 
-      if(faculty.title == name)
+      if(faculty.title == title)
         code =  faculty.code;
+    }
+
+    return code;
+  }
+
+  /**
+   * search and return the code of the given course
+   * @param title String
+   * @returns code as String
+   */
+  public static getCodeCourseByName(title:String){
+    let code : string = "";
+    for(let course of EdocsPage.allCourse){
+
+      if(course.title == title)
+        code =  course.code;
     }
 
     return code;

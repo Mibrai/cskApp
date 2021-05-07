@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, Platform , ToastController, AlertC
 import { File } from '@ionic-native/file';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder , FormGroup } from '@angular/forms';
+import { EdocsPage } from '../edocs/edocs';
 
 /**
  * Generated class for the NewPostPage page.
@@ -28,7 +29,7 @@ export class NewPostPage implements OnInit {
   file_ : File;
   platformStatus: boolean = false;
   file_path :any = 'https://clausthaler-kameruner.com/edocs/files/';
-  fileEndPoint :any = 'https://clausthaler-kameruner.com/edocs/php/uploadFileServer.php';
+  fileEndPoint :any = 'https://clausthaler-kameruner.com/edocs/api/apiPost/addPost.php';
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -65,18 +66,34 @@ export class NewPostPage implements OnInit {
   submitForm(){
     if( this.title == ""  && this.description == "" ) {
       const alert = this.alertCtrl.create({
-        title: 'Feedback',
-        subTitle: 'Renseignez soit le titre soit la decsription '+this.navParams.get('post_id'),
+        title: 'Feedback ',
+        subTitle: 'Renseignez soit le titre soit la decsription \n ',
         buttons: ['OK']
       });
       alert.present();
     } else {
+
+      //Get current time
+      let today = new Date();
+      var dd = String(today.getDate());
+      var mm = String(today.getMonth() + 1); //January is 0!
+      var yyyy = today.getFullYear();
+
       console.log("fichier selectionne : "+this.file.name);
       var formData: any = new FormData();
       formData.append("name", this.form.get('name').value);
       formData.append("content", this.file);
-      formData.append("postId","IF123");
-      formData.append("fileDestination","../files/testData");
+      formData.append("principalPostId",this.navParams.get('post_id'));
+      formData.append("codeFaculty",EdocsPage.getCodeFacultyByName(this.navParams.get('choosedFaculty')));
+      formData.append("codeCourse",EdocsPage.getCodeCourseByName(this.navParams.get('choosedCourse')));
+      formData.append("facultyTitle",this.navParams.get('choosedFaculty'));
+      formData.append("courseTitle",this.navParams.get('choosedCourse'));
+      formData.append("postDate",dd+"-"+mm+"-"+yyyy);
+      formData.append("title",this.title);
+      formData.append("description",this.description);
+      formData.append("idMember","4");
+      formData.append("postTime",String(today.getHours())+" : "+String(today.getMinutes()));
+      formData.append("fileDestination","../../files/"+this.navParams.get('choosedFaculty')+"/"+this.navParams.get('choosedCourse'));
 
       this.http.post(this.fileEndPoint, formData).subscribe(
         (response) => {
