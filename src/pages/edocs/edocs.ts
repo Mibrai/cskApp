@@ -26,6 +26,8 @@ export class EdocsPage {
   data:any = [];
   str:any;
   allPost: any = [];
+  allFaculty_: any[];
+  allCourses_: any[];
   selectedComments : string = "";
   tabCmt :any = [];
   public static allFaculty :any = [];
@@ -67,17 +69,16 @@ export class EdocsPage {
     //get all faculty from api
     this.facultyService.getAllFaculty().subscribe(faculties => {
      EdocsPage.allFaculty = JSON.parse(JSON.stringify(faculties));
+     this.allFaculty_ = JSON.parse(JSON.stringify(faculties));
     });
 
     //get all Course from api
     this.courseService.getAllCourse().subscribe(courses => {
-
       EdocsPage.allCourse = JSON.parse(JSON.stringify(courses));
+      this.allCourses_ = JSON.parse(JSON.stringify(courses));
     });
     //get all post from  api
     this.allPost = this.postService.getAllPost().subscribe(posts => {
-
-      console.log("Element \n");
 
       this.data = JSON.parse(JSON.stringify(posts));
       this.allPost = JSON.parse(JSON.stringify(posts));

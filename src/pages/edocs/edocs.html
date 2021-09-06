@@ -25,7 +25,7 @@
           <ion-option>B2</ion-option>
           <ion-option>C1</ion-option>
           <ion-option disabled>----- Uni -----</ion-option>
-          <ion-option *ngFor="let faculty of allFaculty" [value]="faculty.title">{{faculty.title}}</ion-option>
+          <ion-option *ngFor="let faculty of  allFaculty_" [value]="faculty.title">{{faculty.title}}</ion-option>
           <ion-option>...</ion-option>
         </ion-select>
       </ion-item>
@@ -40,7 +40,7 @@
           <ion-option>Grammatik</ion-option>
           <ion-option>Sprechen</ion-option>
           <ion-option disabled>----- Uni -----</ion-option>
-          <ion-option *ngFor="let course of allCourse" [value]="course.title">{{course.title}}</ion-option>
+          <ion-option *ngFor="let course of allCourses_" [value]="course.title">{{course.title}}</ion-option>
           <ion-option>...</ion-option>
         </ion-select>
       </ion-item>
