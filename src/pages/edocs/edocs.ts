@@ -28,6 +28,8 @@ export class EdocsPage {
   allPost: any = [];
   allFaculty_: any[];
   allCourses_: any[];
+  allBasicPost: any = [];
+  allPostToPostConnexion: any = [];
   selectedComments : string = "";
   tabCmt :any = [];
   public static allFaculty :any = [];
@@ -65,7 +67,14 @@ export class EdocsPage {
   }
 
   ionViewWillEnter(){
-
+    //get all basic post
+    this.postService.getAllBasicPost().subscribe(allBasicPost =>{
+      this.allBasicPost = JSON.parse(JSON.stringify(allBasicPost));
+    });
+    //get all Post To Post Connexion
+    this.postService.getAllPostToPostConnexion().subscribe(allPostToPost =>{
+      this.allPostToPostConnexion = JSON.parse(JSON.stringify(allPostToPost));
+    });
     //get all faculty from api
     this.facultyService.getAllFaculty().subscribe(faculties => {
      EdocsPage.allFaculty = JSON.parse(JSON.stringify(faculties));
@@ -83,6 +92,24 @@ export class EdocsPage {
       this.data = JSON.parse(JSON.stringify(posts));
       this.allPost = JSON.parse(JSON.stringify(posts));
       console.log(this.allPost);
+
+      //load response fro any Post
+      let i = 0;
+      while(i < this.data.length){
+        let listResponse = [];
+
+        for(let cnx of this.allPostToPostConnexion){
+          if(cnx.id_post_principal == this.data[i].id){
+              for(let tmp_post of this.allBasicPost){
+                if(tmp_post.id == cnx.id_sub_post)
+                  listResponse.push(tmp_post)
+              }
+          }
+        }
+
+        this.data[i].responses = listResponse;
+        i++;
+      }
     });
 
   }
@@ -96,7 +123,17 @@ export class EdocsPage {
   }
 
   async showReponse(idPost:string ,post_description:String,listResponse:any = [] ,selectedFaculty:String , selectedCourse:String){
+    //get all response from allBasicPost and allPostToPostConnexion
+    listResponse = [];
 
+      for(let cnx of this.allPostToPostConnexion){
+        if(cnx.id_post_principal == idPost){
+            for(let tmp_post of this.allBasicPost){
+              if(tmp_post.id == cnx.id_sub_post)
+                listResponse.push(tmp_post)
+            }
+        }
+      }
     let modalResponse =  await this.modalCtrl.create(ShowReponssePage ,{ responses : listResponse , desc :post_description, id_post : idPost, choosedFaculty : selectedFaculty, choosedCourse : selectedCourse }, {cssClass : 'designModal'});
 
      return await modalResponse.present();

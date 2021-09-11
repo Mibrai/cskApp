@@ -11,7 +11,7 @@ import { MyTabsPage } from '../pages/my-tabs/my-tabs';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = MyTabsPage;
+  rootPage:any = LoginPage;
   @ViewChild('myRoot') nav: NavController;
   loginPage :any = LoginPage;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

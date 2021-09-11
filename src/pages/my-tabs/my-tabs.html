@@ -1,7 +1,7 @@
 <ion-menu side="start" type="overlay" [content]="mymenu">
   <ion-header>
     <ion-toolbar color="toolbar">
-      <ion-title> Menu</ion-title>
+      <ion-title> Menu {{ current_user.surname}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -9,12 +9,16 @@
     <div class="logo">
       <img class="logo-img" src="../../assets/imgs/csklogo.png" />
     </div>
-    <ion-list class="menu-list">
-        <ion-item (click)="goToLogin()">
+    <ion-list class="menu-list" >
+        <ion-item (click)="goToLogin()"  *ngIf= " current_user.id == null">
           <ion-label><ion-icon slot="start" name="key" size="large"></ion-icon><span slot="end">Login</span></ion-label>
 
         </ion-item>
-        <ion-item (click)="goToSignUp()">
+        <ion-item (click)="goToLogin()"  *ngIf= " current_user.id != null">
+          <ion-label><ion-icon slot="start" name="key" size="large"></ion-icon><span slot="end">Logout</span></ion-label>
+
+        </ion-item>
+        <ion-item (click)="goToSignUp()"  *ngIf = " current_user.id == null">
 
           <ion-label><ion-icon slot="start" name="log-in" size="large"></ion-icon><span slot="end">Sign In</span></ion-label>
         </ion-item>

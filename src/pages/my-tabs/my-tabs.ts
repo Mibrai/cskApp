@@ -19,6 +19,7 @@ import { SignUpPage } from '../sign-up/sign-up';
 })
 export class MyTabsPage {
 
+  current_user : any = LoginPage.current_user;
   rootPage:string;
   flohmarktRoot = 'FlohmarktPage'
   edocsRoot = 'EdocsPage'

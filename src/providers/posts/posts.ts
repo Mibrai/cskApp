@@ -10,6 +10,8 @@ import { AlertController } from 'ionic-angular';
 */
 const ALL_POST_API_URL = 'https://clausthaler-kameruner.com/edocs/api/apiPost/';
 const ADD_CMT_API_URL = 'https://clausthaler-kameruner.com/edocs/api/apiPost/addComment.php';
+const ALL_POST_TO_POST_CONNEXION_API_URL = 'https://clausthaler-kameruner.com/edocs/api/apiPost/allPostToPostConnexion.php';
+const ALL_BASIC_POST_API_URL = 'https://clausthaler-kameruner.com/edocs/api/apiPost/allBasicPost.php';
 @Injectable()
 export class PostsProvider {
 
@@ -20,6 +22,14 @@ export class PostsProvider {
 
   getAllPost(){
     return this.http.get(`${ALL_POST_API_URL}`);
+  }
+
+  getAllBasicPost(){
+    return this.http.get(`${ALL_BASIC_POST_API_URL}`);
+  }
+
+  getAllPostToPostConnexion(){
+    return this.http.get(`${ALL_POST_TO_POST_CONNEXION_API_URL}`);
   }
 
   addComment(idPost:string, idUser:string,cmt :string){
